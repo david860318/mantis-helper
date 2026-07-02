@@ -128,7 +128,7 @@ function buildText(
     blocks.push('無緊急立即單')
   }
 
-  // outputText.value = blocks.join('\n').trim()
+  outputText.value = blocks.join('\n').trim()
 }
 
 /* ===== upload ===== */
