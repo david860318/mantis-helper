@@ -2,6 +2,7 @@
 import { ref, nextTick, computed } from 'vue'
 import * as Papa from 'papaparse'
 
+// mantis名稱轉換為line的名稱
 const nameMap: Record<string, string> = {
   'david.chen': '陳哲',
   'JohnSon.chen': 'JohnSon.chen',
@@ -27,15 +28,15 @@ const pendingRelease = ref<any[]>([])
 
 const outputRef = ref<HTMLElement | null>(null)
 
-/* ===== UX computed（避免 split 重算） ===== */
+// 計算行數
 const lineCount = computed(() => outputText.value.split('\n').length)
 
-/* ===== safe getter ===== */
+// safe getter
 function get(row: any, key: string) {
   return (row?.[key] ?? '').toString().trim()
 }
 
-/* ===== CSV parse（不動邏輯） ===== */
+// 上傳csv篩選欄位
 function parseRows(rows: any[]) {
   const important: Record<string, string[]> = {}
   const urgent: Record<string, string[]> = {}
@@ -93,7 +94,7 @@ function parseRows(rows: any[]) {
   buildText(important, urgent)
 }
 
-/* ===== build text V2（更穩 + 不跑版） ===== */
+// 重要緊急單
 function buildText(
   important: Record<string, string[]>,
   urgent: Record<string, string[]>
@@ -102,13 +103,11 @@ function buildText(
 
   blocks.push('=========== 重要單 ===========')
   blocks.push('以下重要單請在中午前修改完成，無法完成請主動回報')
-  blocks.push('')
 
   if (Object.keys(important).length) {
     Object.keys(important).forEach((p) => {
       blocks.push(`@${p}`)
       blocks.push(...important[p])
-      blocks.push('')
     })
   } else {
     blocks.push('無重要單', '')
@@ -116,13 +115,11 @@ function buildText(
 
   blocks.push('=========== 緊急立即單 ===========')
   blocks.push('以下緊急立即單請在中午前修改完成，無法完成請主動回報')
-  blocks.push('')
 
   if (Object.keys(urgent).length) {
     Object.keys(urgent).forEach((p) => {
       blocks.push(`@${p}`)
       blocks.push(...urgent[p])
-      blocks.push('')
     })
   } else {
     blocks.push('無緊急立即單')
@@ -131,7 +128,7 @@ function buildText(
   outputText.value = blocks.join('\n').trim()
 }
 
-/* ===== upload ===== */
+// 解析CSV
 function upload(e: Event) {
   const file = (e.target as HTMLInputElement).files?.[0]
   if (!file) return
@@ -143,7 +140,7 @@ function upload(e: Event) {
   })
 }
 
-/* ===== download CSV（完全不動） ===== */
+// 待上版明細下載CSV
 function downloadCSV() {
   const headers = ['編號', '嚴重性', '狀態', '慢組驗測', '摘要']
 
@@ -165,7 +162,7 @@ function downloadCSV() {
   URL.revokeObjectURL(url)
 }
 
-/* ===== copy V2 ===== */
+// 複製重要緊急通知
 const copied = ref(false)
 
 function copyOutput() {
@@ -179,7 +176,7 @@ function copyOutput() {
   }, 1500)
 }
 
-/* ===== scroll lock V2 ===== */
+// scroll lock
 async function scrollToBottom() {
   await nextTick()
   if (outputRef.value) {
@@ -191,15 +188,14 @@ async function scrollToBottom() {
 <template>
   <div class="page">
 
-    <!-- TOP BAR -->
+    <!-- 功能標題 -->
     <div class="topbar">
       <div class="title">
         <h1>每日 Mantis 通知系統</h1>
-        <p>CSV 自動分類 · 通知生成 · 待上版管理</p>
       </div>
     </div>
 
-    <!-- STEP 1 -->
+    <!-- 上傳mantis匯出的csv -->
     <section class="card step">
       <div class="step-header">
         <span class="step-no">1</span>
@@ -211,13 +207,13 @@ async function scrollToBottom() {
       </div>
     </section>
 
-    <!-- STEP 2 OUTPUT (MAIN AREA) -->
+    <!-- 重要緊急單通知 -->
     <section class="card output-card">
 
   <div class="output-header">
     <div class="left">
       <span class="step-no">2</span>
-      <h2>重要 / 緊急通知</h2>
+      <h2>重要 / 緊急單通知</h2>
     </div>
 
     <button
@@ -244,7 +240,7 @@ async function scrollToBottom() {
   </div>
 </section>
 
-    <!-- STEP 3 TABLE -->
+    <!-- 待上版明細 -->
     <section class="card step">
 
       <div class="step-header">
