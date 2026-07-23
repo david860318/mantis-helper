@@ -14,7 +14,7 @@
 
       <RouterLink to="/statistics">
         <span class="icon">📊</span>
-        <span>統計分析</span>
+        <span>每日QA回報</span>
       </RouterLink>
     </nav>
 

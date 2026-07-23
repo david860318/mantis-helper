@@ -9,12 +9,12 @@ import Sidebar from './components/Sidebar.vue'
 
     <div class="main-layout">
 
-      <header class="topbar">
+      <!-- <header class="topbar">
         <div class="title-group">
           <h1>Mantis Helper</h1>
           <span>每日通知系統</span>
         </div>
-      </header>
+      </header> -->
 
       <main class="content">
         <RouterView />

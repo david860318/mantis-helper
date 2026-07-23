@@ -146,7 +146,7 @@ const todayText = computed(() => {
 <div class="page">
 
   <header class="header">
-    <h1>Mantis Daily Management Dashboard</h1>
+    <h1>每日QA回報</h1>
     <p>每日問題追蹤與人員工作量分析</p>
   </header>
 
@@ -158,13 +158,6 @@ const todayText = computed(() => {
     />
 
     <span>{{fileName}}</span>
-
-    <!-- <button
-      :disabled="!statistics.length"
-      @click="exportExcel"
-    >
-      匯出 Excel
-    </button> -->
   </section>
 
   <section
@@ -194,7 +187,7 @@ const todayText = computed(() => {
 
   <section class="card table-card">
 
-    <h2>每日QA回報</h2>
+    <!-- <h2>每日QA回報</h2> -->
 
     <table>
       <thead>
@@ -268,16 +261,6 @@ const todayText = computed(() => {
   margin-bottom:16px;
 }
 
-button{
-  padding:7px 12px;
-  border:none;
-  border-radius:7px;
-  background:#2563eb;
-  color:#fff;
-  cursor:pointer;
-  font-size:13px;
-}
-
 button:disabled{
   background:#cbd5e1;
 }
@@ -305,11 +288,17 @@ button:disabled{
   font-size:15px;
 }
 
-table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:12px;
+.table-card{
+  /* width:100%; */
 }
+
+table{
+  width:30%;
+  table-layout:fixed;
+  border-collapse:collapse;
+}
+
+
 
 th{
   background:#f8fafc;
