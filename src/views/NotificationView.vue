@@ -21,6 +21,7 @@ const nameMap: Record<string, string> = {
   'Alex.Lu': '崇道',
   'ben.lian': 'Yao Syua',
   'kenzie.wang': 'Kenzie',
+  'yuanfu.hsu': '許原',
 }
 
 const outputText = ref('')
